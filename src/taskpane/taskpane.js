@@ -12,6 +12,7 @@ Office.onReady((info) => {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("run").onclick = run;
+    document.getElementById("downloadButton").onclick = downloadSampleFile;
   }
 });
 
@@ -34,5 +35,23 @@ export async function run() {
     });
   } catch (error) {
     console.error(error);
+  }
+  Office.onReady(() => {});
+
+  function downloadSampleFile() {
+    const content = "hello world"; // The text content for the file
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8;" });
+
+    // Create a link element
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute("href", url);
+    link.setAttribute("download", "samplefile.txt"); // .txt extension for the file
+    link.style.visibility = "hidden";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
